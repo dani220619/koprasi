@@ -6,7 +6,6 @@
          <div class="sidebar-content">
              <div class="user">
                  <div class="avatar-sm float-left mr-2">
-
                      <img src="<?php echo base_url(); ?>assets/foto/user/<?php echo $this->session->userdata['image']; ?>" alt="..." class="avatar-img rounded-circle">
                  </div>
                  <div class="info">
@@ -17,17 +16,10 @@
                              <b>
                                  <div class="fas fa-clock"></div> <span id="jam" style="font-size:20px; color: black;"></span>
                              </b>
-
-
-
                          </span>
                      </a>
-
-
                  </div>
              </div>
-
-
              <ul class="nav nav-primary">
                  <?php if ($_SESSION["id_level"] == ("1")) { ?>
                      <li class="nav-item active">
@@ -116,14 +108,32 @@
                              </ul>
                          </div>
                      </li>
-                     <li class="nav-item">
-                         <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
+                 <?php } ?>
+                 <?php if ($_SESSION["id_level"] == ("3")) { ?>
+                     <li class="nav-item active">
+                         <a href="<?= base_url('dashboard') ?>" class="collapsed" aria-expanded="false">
                              <i class="fas fa-home"></i>
-                             <p>Logout</p>
+                             <p>Dashboard</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('admin/angsuran_anggota') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-home"></i>
+                             <p>Angsuran</p>
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>
                  <?php } ?>
+                 <li class="nav-item">
+                     <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
+                         <i class="fas fa-home"></i>
+                         <p>Logout</p>
+                         <!-- <span class="caret"></span> -->
+                     </a>
+                 </li>
+
+
              </ul>
          </div>
      </div>

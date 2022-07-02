@@ -117,4 +117,15 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
+    public function angsuran_anggota($nik)
+    {
+        $query = $this->db->query("
+        select tu.full_name, tu.image, tu.nik, tu.image, p.*
+        from pinjaman p
+        left join tbl_user tu
+        on p.id_user=tu.id_user
+        where tu.nik = " . $nik . "
+        ");
+        return $query;
+    }
 }

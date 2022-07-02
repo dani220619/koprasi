@@ -674,10 +674,6 @@ class Admin extends MY_Controller
         $data["title"]         = "Backup Database Dengan CodeIgniter";
         $this->template->load('layoutbackend', 'admin/backup_data', $data);
     }
-
-
-
-
     public function detail_simpanan($nik)
     {
         $data['title'] = "Detail Simpanan Data";
@@ -701,7 +697,6 @@ class Admin extends MY_Controller
     public function insert_pinjaman()
     {
         // var_dump($this->input->post('username'));
-
         $save  = array(
             'id' => rand(0000, 9999),
             'id_user' => $this->input->post('id_user'),
@@ -757,7 +752,6 @@ class Admin extends MY_Controller
     {
         $data['title'] = "List Angsuran Data";
         $data['nama'] = $this->Mod_admin->nama_peminjam()->result();
-
         $data['list_angsuran'] = $this->Mod_admin->pinjaman()->result();
 
         // dead($data['lama']);
@@ -771,15 +765,6 @@ class Admin extends MY_Controller
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
-        // foreach ($ds as $d) {
-        //     $i = 1;
-        //     for ($i; $i <= $d->jml_angsuran; $i++) {
-        //         $data['sb'] = $i;
-        //     }
-        // }
-
-
-        // dead($data['sb']);
 
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
@@ -827,6 +812,27 @@ class Admin extends MY_Controller
         $this->template->load('layoutbackend', 'admin/detail_angsuran', $data);
     }
 
+    public function angsuran_anggota()
+    {
+        $data['title'] = "List Angsuran Data";
+        $id = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $nik = $id['nik'];
+        $data['list_angsuran'] = $this->Mod_admin->angsuran_anggota($nik)->result();
+
+        // dead($data['list_angsuran']);
+        $this->template->load('layoutbackend', 'admin/angsuran_anggota', $data);
+    }
+    public function add_angsuran_anggota($id)
+    {
+        $data['title'] = "Tambah Angsuran Data";
+
+        $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
+        $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        $data['lama'] = $this->Mod_admin->lama()->result();
+        $data['sb'] = $this->Mod_admin->sdhbyr()->result();
+
+        $this->template->load('layoutbackend', 'admin/add_angsuran_anggota', $data);
+    }
 
     public function backup()
     {

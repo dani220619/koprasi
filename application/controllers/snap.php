@@ -23,7 +23,7 @@ class Snap extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $params = array('server_key' => 'SB-Mid-server-yk6cIsZJjtFa-KfP4ebLd2bK', 'production' => false);
+        $params = array('server_key' => 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k', 'production' => false);
         $this->load->library('midtrans');
         $this->midtrans->config($params);
         $this->load->helper('url');
@@ -36,29 +36,31 @@ class Snap extends CI_Controller
 
     public function token()
     {
-        $no_angsuran = $this->input->post('no_angsuran');
-        $full_name = $this->input->post('full_name');
-        $jumlah_angsuram = $this->input->post('jumlah_angsuram');
-        $nilai = $this->input->post('nilai');
 
         // Required
         $transaction_details = array(
             'order_id' => rand(),
-            'gross_amount' => "$nilai", // no decimal allowed for creditcard
+            'gross_amount' => 94000, // no decimal allowed for creditcard
         );
 
         // Optional
         $item1_details = array(
-            'id' => "$no_angsuran",
+            'id' => 'a1',
             'price' => 18000,
-            'quantity' => "$jumlah_angsuram",
-            'name' => "$full_name"
+            'quantity' => 3,
+            'name' => "Apple"
         );
 
         // Optional
+        $item2_details = array(
+            'id' => 'a2',
+            'price' => 20000,
+            'quantity' => 2,
+            'name' => "Orange"
+        );
 
         // Optional
-        $item_details = array($item1_details);
+        $item_details = array($item1_details, $item2_details);
 
         // Optional
         $billing_address = array(
