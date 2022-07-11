@@ -85,12 +85,12 @@
                                     <input type="text" hidden class="form-control" id="full_name" value="<?= $angsuran->full_name ?>" placeholder="Masukan No Angsuran">
                                     <input type="hidden" name="result_type" id="result-type" value="">
                                     <input type="hidden" name="result_data" id="result-data" value="">
-                                    <div class="form-group col-12">
-                                        <label>Bulan</label>
-                                        <select class="bootstrap-select strings selectpicker" onchange="addlama(this.value)" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
+                                    <div class="form-group col-md-12">
+                                        <label>Lama</label>
+                                        <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                             <?php
                                             foreach ($lama as $lm) { ?>
-                                                <option value="<?= $lm->id; ?>"><?= $lm->lama; ?></option>
+                                                <option value="<?= $lm->lama; ?>"><?= $lm->lama; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -102,8 +102,10 @@
                                     <div class="col-md-12 col-lg-12">
                                         <div class="form-group">
                                             <label for="jumlah">Jumlah</label>
-                                            <input type="text" class="form-control" id="nilai" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
-                                            <input type="text" class="form-control" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
+                                            <input type="number" class="form-control bil1" id="bil1" name="bil1" value="" placeholder="Masukan Jumlah" hidden>
+                                            <input type="number" class="form-control" id="bil2" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
+                                            <input type="number" class="form-control" id="hasil" name="hasil" value="" placeholder="Masukan Jumlah" hidden>
+                                            <input type="text" class="form-control" id="total" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
                                             <small id="emailHelp2" class="form-text text-muted"></small>
                                         </div>
                                     </div>
@@ -130,39 +132,47 @@
     }
 </script>
 <script>
-    function hitungTotalSPP() {
-        var _selected = $('select.bootstrap-select').val();
-        var _jmlbln = _selected.length;
-        var _jmlspp = $('#jumlah_angsuran option:selected').text().split('|')[1].replace('Rp. ', '').replace('.', '');
-        var _total = parseInt(_jmlbln) * parseInt(_jmlspp);
-        return _total;
-    }
-
-    function addlama(lama) {
-        var explode = lama.split("|", );
-        var _nilai = $('#nilai').val();
-
-        var total = explode++ * _nilai;
-        console.log(total);
-        $("#nilai_tukar").val(explode[0]);
-    }
+    $(document).ready(function() {
+        $('#jumlah_angsuran').change(function() {
+            var jumlah_angsuran = $('#jumlah_angsuran').val();
+            val = jumlah_angsuran.length;
+            var lama = $('#bil1').val(val);
+            var bil1 = $('#bil1').val();
+            var bil2 = $('#bil2').val();
+            var total = parseInt(bil1) * parseInt(bil2);
+            $("#hasil").val(total);
+        })
+    })
 </script>
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-a3XBeF6t11TJ5LWQ"></script>
 <script type="text/javascript">
     $('#pay-button').click(function(event) {
         event.preventDefault();
         $(this).attr("disabled", "disabled");
-        var _nilai = hitungTotalSPP();
         var _jumlah_angsuran = $('#jumlah_angsuran').val();
-        var _full_name = $('#full_name').val();
-        console.log(_nilai);
+        var _total = $('#hasil').val();
+        var _fullname = $('#full_name').val();
+        var _nopinjaman = $('#no_pinjaman').val();
+        var _bil1 = $('#bil1').val();
+        var _bil2 = $('#bil2').val();
+
+
         $.ajax({
+            type: 'POST',
             url: '<?= site_url() ?>snap/token',
+            data: {
+                jumlah_angsuran: _jumlah_angsuran,
+                total: _total,
+                fullname: _fullname,
+                nopinjaman: _nopinjaman,
+                bil1: _bil1,
+                bil2: _bil2,
+            },
             cache: false,
 
             success: function(data) {
                 //location = data;
-
+                // console.log(data);
                 console.log('token = ' + data);
 
                 var resultType = document.getElementById('result-type');
@@ -176,22 +186,24 @@
                 }
 
                 snap.pay(data, {
-
                     onSuccess: function(result) {
                         changeResult('success', result);
                         console.log(result.status_message);
                         console.log(result);
-                        $("#payment-form").submit();
+                        //alert('success');
+                        $("#form-spp").submit();
                     },
                     onPending: function(result) {
                         changeResult('pending', result);
                         console.log(result.status_message);
-                        $("#payment-form").submit();
+                        //alert('pending');
+                        $("#form-spp").submit();
                     },
                     onError: function(result) {
                         changeResult('error', result);
                         console.log(result.status_message);
-                        $("#payment-form").submit();
+                        //alert('error');
+                        $("#form-spp").submit();
                     }
                 });
             }
