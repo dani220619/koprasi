@@ -108,6 +108,10 @@ class Mod_admin extends CI_Model
         $insert = $this->db->insert_batch($tabel, $data);
         return $insert;
     }
+    public function save_batch($data)
+    {
+        return $this->db->insert_batch('angsuran', $data);
+    }
     public function sdhbyr()
     {
         $query = $this->db->query("

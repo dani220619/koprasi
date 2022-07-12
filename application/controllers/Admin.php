@@ -795,6 +795,41 @@ class Admin extends MY_Controller
         // echo json_encode(array("status" => TRUE));
 
     }
+    public function insert_angsuran_ang()
+    {
+        $id = $this->input->post('id_pinjaman');
+        $id_angsuran = 'ANG' . rand(000, 999);
+        $jumlah_angsuran = $this->input->post('jumlah_angsuran[]', TRUE);
+        $metode_pembayaran = $this->input->post('metode_pembayaran');
+        $statustype = $this->input->post('result_type');
+        $statusdata = $this->input->post('result_data');
+        $json = json_decode($statusdata, true);
+        //echo $json['order_id'];exit;
+        $status = ($metode_pembayaran == 'Manual' ? '0' : ($statustype == 'success' ? '0' : ($statustype == 'pending' ? '1' : '2')));
+        $orderid = ($metode_pembayaran == 'Manual' ? '' : $json['order_id']);
+        $no_virtual = ($metode_pembayaran == 'Manual' ? '' : $json['va_numbers'][0]['va_number'] . '|' . $json['va_numbers'][0]['bank']);
+        foreach ($jumlah_angsuran as $key) { // Kita buat perulangan berdasarkan nisn sampai data terakhir
+            $save[$key] =
+                array(
+                    'jumlah_angsuran' => $key,
+                    'id' => $id_angsuran++,
+                    'id_user' => $this->input->post('id_user'),
+                    'no_angsuran' => $this->input->post('no_pinjaman'),
+                    'id_pinjaman' => $id,
+                    'nilai' => $this->input->post('nilai'),
+                    'tanggal' => date("Y-m-d H:i:s"),
+                    'status' => $status,
+                    'order_id' => $orderid,
+                    'no_virtual' => $no_virtual,
+                    'metode_pembayaran' => "Online"
+                );
+            $key;
+        }
+        // dead($save);
+        $this->Mod_admin->insertangsuran("angsuran", $save);
+        redirect('admin/add_angsuran_anggota/' . $id . '');
+
+    }
     public function delete_angsuran($id)
     {
         $this->Mod_user->delete_angsuran($id); // Panggil fungsi delete() yang ada di SiswaModel.php

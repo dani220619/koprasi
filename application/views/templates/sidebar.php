@@ -119,7 +119,7 @@
                      </li>
                      <li class="nav-item">
                          <a href="<?= base_url('admin/angsuran_anggota') ?>" class="collapsed" aria-expanded="false">
-                             <i class="fas fa-home"></i>
+                             <i class="fas fa-money-check-alt"></i>
                              <p>Angsuran</p>
                              <!-- <span class="caret"></span> -->
                          </a>
@@ -127,7 +127,7 @@
                  <?php } ?>
                  <li class="nav-item">
                      <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
-                         <i class="fas fa-home"></i>
+                         <i class="fas fa-sign-out-alt"></i>
                          <p>Logout</p>
                          <!-- <span class="caret"></span> -->
                      </a>

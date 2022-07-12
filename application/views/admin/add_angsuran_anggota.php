@@ -25,6 +25,9 @@
                                             <th>NO ANGSURAN</th>
                                             <th>JUMLAH</th>
                                             <th>NILAI</th>
+                                            <th>STATUS</th>
+                                            <th>Pembayaran</th>
+                                            <th>NO Virtual</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -38,10 +41,14 @@
                                                 <td><?= $a->no_angsuran ?></td>
                                                 <td><?= $a->jumlah_angsuran ?>X</td>
                                                 <td><?= rupiah($a->nilai) ?></td>
+                                                <td><?php echo ($a->status == '0' ? 'Lunas' : ($a->status == '1' ? 'Pending' : 'Error')) ?></td>
+                                                <td><?= $a->metode_pembayaran ?></td>
+                                                <td><?= $a->no_virtual ?></td>
+
 
                                                 <td>
                                                     <div class="form-button-action">
-                                                        <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
+                                                        <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -74,7 +81,7 @@
                         <div class="card-header">
                             <div class="card-title">Tambah Angsuran</div>
                         </div>
-                        <form id="payment-form" class="angsuran" method="post" action="<?= base_url('admin/insert_angsuran'); ?>" enctype="multipart/form-data">
+                        <form id="payment-form" method="post" action="<?= site_url() ?>/admin/insert_angsuran_ang">
                             <div class="card-body">
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
@@ -84,44 +91,62 @@
                                     <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $angsuran->id ?>" placeholder="Masukan No Angsuran">
                                     <input type="text" hidden class="form-control" id="full_name" value="<?= $angsuran->full_name ?>" placeholder="Masukan No Angsuran">
                                     <input type="hidden" name="result_type" id="result-type" value="">
-                                    <input type="hidden" name="result_data" id="result-data" value="">
-                                    <div class="form-group col-md-12">
-                                        <label>Lama</label>
-                                        <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
-                                            <?php
-                                            foreach ($lama as $lm) { ?>
-                                                <option value="<?= $lm->lama; ?>"><?= $lm->lama; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <?php
-                                    $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-                                    $hasil = $bunga / $angsuran->lama;
-                                    $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
-                                    ?>
-                                    <div class="col-md-12 col-lg-12">
-                                        <div class="form-group">
-                                            <label for="jumlah">Jumlah</label>
-                                            <input type="number" class="form-control bil1" id="bil1" name="bil1" value="" placeholder="Masukan Jumlah" hidden>
-                                            <input type="number" class="form-control" id="bil2" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
-                                            <input type="number" class="form-control" id="hasil" name="hasil" value="" placeholder="Masukan Jumlah" hidden>
-                                            <input type="text" class="form-control" id="total" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
-                                            <small id="emailHelp2" class="form-text text-muted"></small>
-                                        </div>
-                                    </div>
-                                    <input type="text" hidden class="form-control" id="full_name" value="Online" placeholder="Masukan No Angsuran">
+                                </div>
+                                <input type="hidden" name="result_data" id="result-data" value="">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Lama</label>
+                                    <select class="bootstrap-select strings selectpicker form-control" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
+                                        <?php
+                                        foreach ($lama as $lm) { ?>
+                                            <option value="<?= $lm->lama; ?>"><?= $lm->lama; ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="card-action">
-                                <button id="pay-button" name="bayar" value="BAYAR" class="btn btn-success">Submit</button>
-                                <a href="<?= base_url('admin/angsuran_anggota') ?>" class="btn btn-danger">Kembali</a>
+                            <?php
+                            $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
+                            $hasil = $bunga / $angsuran->lama;
+                            $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
+                            ?>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="jumlah">Jumlah</label>
+                                    <input type="number" class="form-control bil1" id="bil1" name="bil1" value="" placeholder="Masukan Jumlah" hidden>
+                                    <input type="number" class="form-control" id="bil2" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
+                                    <input type="number" class="form-control" id="hasil" name="hasil" value="" placeholder="Masukan Jumlah" hidden>
+                                    <input type="text" class="form-control" id="total" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
+                                    <small id="emailHelp2" class="form-text text-muted"></small>
+                                </div>
                             </div>
+                            <input type="text" hidden class="form-control" id="metode-pembayaran" name="metode_pembayaran" value="Online" placeholder="Masukan No Angsuran">
+
                         </form>
+                        <div class="card-action">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <button id="pay-button" value="BAYAR" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="<?= base_url('admin/angsuran_anggota') ?>" class="btn btn-danger">Kembali</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 </script>
@@ -144,10 +169,14 @@
         })
     })
 </script>
+
+
+
+
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-a3XBeF6t11TJ5LWQ"></script>
 <script type="text/javascript">
-    $('#pay-button').click(function(event) {
-        event.preventDefault();
+    $("#pay-button").click(function(e) {
+        e.preventDefault();
         $(this).attr("disabled", "disabled");
         var _jumlah_angsuran = $('#jumlah_angsuran').val();
         var _total = $('#hasil').val();
@@ -155,11 +184,12 @@
         var _nopinjaman = $('#no_pinjaman').val();
         var _bil1 = $('#bil1').val();
         var _bil2 = $('#bil2').val();
-
+        //alert('a');exit;
 
         $.ajax({
-            type: 'POST',
-            url: '<?= site_url() ?>snap/token',
+            method: "POST",
+            url: '<?= site_url() ?>/snap/token',
+            cache: false,
             data: {
                 jumlah_angsuran: _jumlah_angsuran,
                 total: _total,
@@ -168,11 +198,9 @@
                 bil1: _bil1,
                 bil2: _bil2,
             },
-            cache: false,
-
             success: function(data) {
                 //location = data;
-                // console.log(data);
+
                 console.log('token = ' + data);
 
                 var resultType = document.getElementById('result-type');
@@ -186,24 +214,22 @@
                 }
 
                 snap.pay(data, {
+
                     onSuccess: function(result) {
                         changeResult('success', result);
                         console.log(result.status_message);
                         console.log(result);
-                        //alert('success');
-                        $("#form-spp").submit();
+                        $("#payment-form").submit();
                     },
                     onPending: function(result) {
                         changeResult('pending', result);
                         console.log(result.status_message);
-                        //alert('pending');
-                        $("#form-spp").submit();
+                        $("#payment-form").submit();
                     },
                     onError: function(result) {
                         changeResult('error', result);
                         console.log(result.status_message);
-                        //alert('error');
-                        $("#form-spp").submit();
+                        $("#payment-form").submit();
                     }
                 });
             }
