@@ -3,6 +3,11 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<?php echo
+$bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
+$hasil = $bunga / $angsuran->lama;
+$total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
+?>
 
 <div class="main-panel">
     <div class="content">
@@ -26,6 +31,8 @@
                                             <th>NO ANGSURAN</th>
                                             <th>JUMLAH</th>
                                             <th>NILAI</th>
+                                            <th>METODE PEMBAYARAN</th>
+                                            <th>STATUS</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -39,7 +46,8 @@
                                                 <td><?= $a->no_angsuran ?></td>
                                                 <td><?= $a->jumlah_angsuran ?>X</td>
                                                 <td><?= rupiah($a->nilai) ?></td>
-
+                                                <td><?= $a->metode_pembayaran ?></td>
+                                                <td><?php echo ($a->status == '200' ? 'Lunas' : ($a->status == '100' ? 'Lunas' : 'Pending')) ?></td>
                                                 <td>
                                                     <div class="form-button-action">
                                                         <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
@@ -79,7 +87,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
-                                    <!-- <input hidden type="number" class="form-control" id="nik" name="nik" placeholder="Masukan nik" value=""> -->
+                                    <!-- <input type="text" class="form-control" id="id" name="id" placeholder="Masukan nik" value=""> -->
                                     <input type="text" hidden class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $angsuran->no_pinjaman ?>" placeholder="Masukan No Angsuran">
                                     <input type="text" hidden class="form-control" id="id_user" name="id_user" value="<?= $angsuran->id_user ?>" placeholder="Masukan No Angsuran">
                                     <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $angsuran->id ?>" placeholder="Masukan No Angsuran">
@@ -88,7 +96,7 @@
                                     <input type="hidden" name="result_data" id="result-data" value="">
 
                                     <div class="form-group col-12">
-                                        <!--<div class="col-lg-5">-->
+
                                         <label>Bulan</label>
                                         <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                             <?php
@@ -96,14 +104,8 @@
                                                 <option value="<?= $lm->id; ?>"><?= $lm->lama; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <!--</div>-->
-                                    </div>
-                                    <?php
-                                    $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-                                    $hasil = $bunga / $angsuran->lama;
-                                    $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
 
-                                    ?>
+                                    </div>
 
                                     <div class="col-md-12 col-lg-12">
                                         <div class="form-group">

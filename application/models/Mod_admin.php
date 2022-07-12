@@ -75,7 +75,7 @@ class Mod_admin extends CI_Model
     public function detail_angsuran($id)
     {
         $query = $this->db->query("
-        select a.*, tu.nik, tu.full_name, sum(a.nilai) as total_angsuran, p.*
+        select a.*, tu.nik, tu.full_name, sum(a.nilai) as total_angsuran, p.id, p.id_user, p.no_pinjaman, p.jumlah, p.tanggal, p.lama, p.bunga
         from angsuran a
         left join tbl_user tu
         on a.id_user=tu.id_user

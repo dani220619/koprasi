@@ -766,6 +766,7 @@ class Admin extends MY_Controller
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
 
+        // dead($data['angsuran']);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()
@@ -784,7 +785,8 @@ class Admin extends MY_Controller
                     'id_pinjaman' => $id,
                     'nilai' => $this->input->post('nilai'),
                     'tanggal' => date("Y-m-d H:i:s"),
-                    'metode_pembayaran' => "Manual"
+                    'metode_pembayaran' => "Manual",
+                    'status' => "100"
                 );
 
             $key;
@@ -828,7 +830,6 @@ class Admin extends MY_Controller
         // dead($save);
         $this->Mod_admin->insertangsuran("angsuran", $save);
         redirect('admin/add_angsuran_anggota/' . $id . '');
-
     }
     public function delete_angsuran($id)
     {

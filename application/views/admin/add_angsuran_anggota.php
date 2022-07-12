@@ -3,6 +3,11 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<?php echo
+$bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
+$hasil = $bunga / $angsuran->lama;
+$total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
+?>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -41,11 +46,9 @@
                                                 <td><?= $a->no_angsuran ?></td>
                                                 <td><?= $a->jumlah_angsuran ?>X</td>
                                                 <td><?= rupiah($a->nilai) ?></td>
-                                                <td><?php echo ($a->status == '0' ? 'Lunas' : ($a->status == '1' ? 'Pending' : 'Error')) ?></td>
+                                                <td><?php echo ($a->status == '200' ? 'Lunas' : ($a->status == '100' ? 'Lunas' : 'Pending')) ?></td>
                                                 <td><?= $a->metode_pembayaran ?></td>
                                                 <td><?= $a->no_virtual ?></td>
-
-
                                                 <td>
                                                     <div class="form-button-action">
                                                         <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
@@ -105,11 +108,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <?php
-                            $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-                            $hasil = $bunga / $angsuran->lama;
-                            $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
-                            ?>
+
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="jumlah">Jumlah</label>
