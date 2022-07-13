@@ -71,4 +71,28 @@ class Mod_aplikasi extends CI_Model
         ");
         return $query;
     }
+    public function tot_angsuran()
+    {
+        $query = $this->db->query("
+        select sum(nilai) as total_angsuran 
+        from angsuran 
+        ");
+        return $query;
+    }
+    public function tot_angsuran_ang($id)
+    {
+        $query = $this->db->query("
+        select sum(nilai) as total_angsuran_ang 
+        from angsuran where id_user = " . $id . "
+        ");
+        return $query;
+    }
+    public function tot_simpanan_ang($id)
+    {
+        $query = $this->db->query("
+        select sum(jumlah) as total_simpanan_ang 
+        from simpanan where nik = " . $id . "
+        ");
+        return $query;
+    }
 }

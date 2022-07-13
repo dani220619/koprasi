@@ -97,17 +97,21 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
                                 </div>
                                 <input type="hidden" name="result_data" id="result-data" value="">
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Lama</label>
-                                    <select class="bootstrap-select strings selectpicker form-control" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
-                                        <?php
-                                        foreach ($lama as $lm) { ?>
-                                            <option value="<?= $lm->lama; ?>"><?= $lm->lama; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
+                            <div class="col-md-12 col-lg-12">
+                                <label>Lama</label>
+                                <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
+                                    <?php
+                                    $lama =
+                                        $this->Mod_admin->detail_angsuran($angsuran->id)->row_array();
+                                    $parm_lama = $lama['lama'];
+                                    for ($i = 1; $i <= $parm_lama; $i++) { ?>
+                                        <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
+
+                                    <?php } ?>
+                                </select>
+
                             </div>
+
 
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
@@ -123,18 +127,10 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
 
                         </form>
                         <div class="card-action">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
-                                        <button id="pay-button" value="BAYAR" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="<?= base_url('admin/angsuran_anggota') ?>" class="btn btn-danger">Kembali</a>
-                                </div>
-                            </div>
+                            <button id="pay-button" name="bayar" value="BAYAR" class="btn btn-success">Submit</button>
+                            <a href="<?= base_url('admin/angsuran_anggota') ?>" class="btn btn-danger">Kembali</a>
                         </div>
+
 
                     </div>
                 </div>

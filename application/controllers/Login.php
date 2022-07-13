@@ -40,6 +40,7 @@ class Login extends CI_Controller
                     'full_name'   => ucfirst($db->full_name),
                     'password'    => $db->password,
                     'id_level'    => $db->id_level,
+                    'nik'    => $db->nik,
                     'aplikasi'    => $apl->nama_aplikasi,
                     'title'       => $apl->title,
                     'logo'        => $apl->logo,

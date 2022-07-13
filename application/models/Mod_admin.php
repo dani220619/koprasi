@@ -50,6 +50,19 @@ class Mod_admin extends CI_Model
         from pinjaman p
         left join tbl_user tu
         on p.id_user=tu.id_user
+        order by p.status desc
+        ");
+        return $query;
+    }
+    public function pinjamanacc()
+    {
+        $query = $this->db->query("
+        select tu.full_name, tu.image, tu.nik, tu.image, p.*
+        from pinjaman p
+        left join tbl_user tu
+        on p.id_user=tu.id_user
+        where p.status = 'Y'
+        order by p.status desc
         ");
         return $query;
     }
@@ -129,6 +142,7 @@ class Mod_admin extends CI_Model
         left join tbl_user tu
         on p.id_user=tu.id_user
         where tu.nik = " . $nik . "
+        order by p.status desc
         ");
         return $query;
     }

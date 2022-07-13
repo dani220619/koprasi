@@ -94,14 +94,16 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
                                     <input type="text" hidden class="form-control" id="full_name" value="<?= $angsuran->full_name ?>" placeholder="Masukan No Angsuran">
                                     <input type="hidden" name="result_type" id="result-type" value="">
                                     <input type="hidden" name="result_data" id="result-data" value="">
-
-                                    <div class="form-group col-12">
-
-                                        <label>Bulan</label>
-                                        <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
+                                    <div class="col-md-12 col-lg-12">
+                                        <label>Lama</label>
+                                        <select class="bootstrap-select strings selectpicker form-control" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                             <?php
-                                            foreach ($lama as $lm) { ?>
-                                                <option value="<?= $lm->id; ?>"><?= $lm->lama; ?></option>
+                                            $lama =
+                                                $this->Mod_admin->detail_angsuran($angsuran->id)->row_array();
+                                            $parm_lama = $lama['lama'];
+                                            for ($i = 1; $i <= $parm_lama; $i++) { ?>
+                                                <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
+
                                             <?php } ?>
                                         </select>
 

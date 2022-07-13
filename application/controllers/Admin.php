@@ -752,7 +752,7 @@ class Admin extends MY_Controller
     {
         $data['title'] = "List Angsuran Data";
         $data['nama'] = $this->Mod_admin->nama_peminjam()->result();
-        $data['list_angsuran'] = $this->Mod_admin->pinjaman()->result();
+        $data['list_angsuran'] = $this->Mod_admin->pinjamanacc()->result();
 
         // dead($data['lama']);
         $this->template->load('layoutbackend', 'admin/list_angsuran', $data);
@@ -765,8 +765,7 @@ class Admin extends MY_Controller
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
-
-        // dead($data['angsuran']);
+        // dead($data['perlama']);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()
@@ -869,6 +868,65 @@ class Admin extends MY_Controller
 
         $this->template->load('layoutbackend', 'admin/add_angsuran_anggota', $data);
     }
+
+    public function ajukan_angsuran()
+    {
+        $data['title'] = "Angsuran Data";
+        $data['id_user'] = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        // dead($data['id_user']);
+        $this->template->load('layoutbackend', 'admin/ajukan_angsuran', $data);
+    }
+
+    public function insert_ajukan_pinjaman()
+    {
+        // var_dump($this->input->post('username'));
+        $save  = array(
+            'id' => rand(0000, 9999),
+            'id_user' => $this->input->post('id_user'),
+            'no_pinjaman' => 'ANG' . rand(000, 999),
+            'jumlah' => $this->input->post('jumlah'),
+            'lama' => $this->input->post('lama'),
+            'status' => "N",
+            'tanggal' => date("Y-m-d H:i:s"),
+
+        );
+        // dead($save);
+        $this->Mod_user->insertpinjaman("pinjaman", $save);
+        redirect('admin/angsuran_anggota');
+        // echo json_encode(array("status" => TRUE));
+    }
+
+    public function terima_pinjaman()
+    {
+        // var_dump($this->input->post('username'));
+        $id = $this->input->post('id');
+        $save  = array(
+            'id' => $id,
+            'bunga' => $this->input->post('bunga'),
+            'status' => "Y",
+            'tanggal' => date("Y-m-d H:i:s"),
+        );
+        // dead($save);
+        $this->Mod_user->terimapinjaman($id, $save);
+        redirect('admin/pinjaman');
+        // echo json_encode(array("status" => TRUE));
+    }
+    public function tolak_pinjaman($id)
+    {
+        // var_dump($this->input->post('username'));
+
+        $save  = array(
+            'id' => $id,
+            'status' => "T",
+            'tanggal' => date("Y-m-d H:i:s"),
+        );
+        // dead($save);
+        $this->Mod_user->terimapinjaman($id, $save);
+        redirect('admin/pinjaman');
+        // echo json_encode(array("status" => TRUE));
+    }
+
 
     public function backup()
     {

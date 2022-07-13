@@ -11,7 +11,10 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title"><?= $title ?></h4>
-
+                            <a href="<?= base_url('admin/ajukan_angsuran') ?>" class="btn btn-primary btn-round ml-auto">
+                                <i class="fa fa-plus"></i>
+                                Ajukan Pinjaman
+                            </a>
                         </div>
                     </div>
 
@@ -27,6 +30,7 @@
                                         <th>NO PINJAMAN</th>
                                         <th>LAMA</th>
                                         <th>JUMLAH</th>
+                                        <th>STATUS</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -41,22 +45,44 @@
                                             <td><?= $a->no_pinjaman ?></td>
                                             <td><?= $a->lama ?>X</td>
                                             <td><?= rupiah($a->jumlah) ?></td>
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <a href="<?= base_url('admin/add_angsuran_anggota/' . $a->id . '') ?>" class="btn btn-primary">
-                                                        <span class="btn-label">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span>
-                                                        Angsuran
-                                                    </a>
-                                                    <a href="<?= base_url('admin/detail_angsuran/' . $a->id . '') ?>" class="btn btn-success">
-                                                        <span class="btn-label">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span>
-                                                        Detail Angsuran
-                                                    </a>
-                                                </div>
+                                            <td><?php if ($a->status == "Y") { ?>
+                                                    <button type="button" class="btn btn-info">DI TERIMA</button>
+                                                <?php } elseif ($a->status == "T") { ?>
+                                                    <button type="button" class="btn btn-danger">DI TOLAK</button>
+                                                <?php } elseif ($a->status == "N") { ?>
+                                                    <button type="button" class="btn btn-warning">MENUNGGU</button>
+                                                <?php  } ?>
                                             </td>
+                                            <td>
+                                                <?php if ($a->status == "N") { ?>
+                                                    <div class="form-button-action">
+
+                                                        <a href="<?= base_url('admin/detail_angsuran/' . $a->id . '') ?>" class="btn btn-success">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-plus"></i>
+                                                            </span>
+                                                            Detail Angsuran
+                                                        </a>
+                                                    </div>
+
+                                                <?php } elseif ($a->status == "Y") { ?>
+                                                    <div class="form-button-action">
+                                                        <a href="<?= base_url('admin/add_angsuran_anggota/' . $a->id . '') ?>" class="btn btn-primary">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-plus"></i>
+                                                            </span>
+                                                            Angsuran
+                                                        </a>
+                                                        <a href="<?= base_url('admin/detail_angsuran/' . $a->id . '') ?>" class="btn btn-success">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-plus"></i>
+                                                            </span>
+                                                            Detail Angsuran
+                                                        </a>
+                                                    </div>
+                                                <?php } ?>
+                                            </td>
+
                                         </tr>
                                         <div class="modal fade" id="edit-pinjaman<?= $a->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog" role="document">

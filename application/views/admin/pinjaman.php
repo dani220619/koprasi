@@ -33,6 +33,7 @@
                                         <th>TANGGAL</th>
                                         <th>LAMA</th>
                                         <th>BUNGA</th>
+                                        <th>STATUS</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -54,13 +55,40 @@
                                             <td><?= $a->tanggal ?></td>
                                             <td><?= $a->lama ?>X</td>
                                             <td><?= $a->bunga ?>%</td>
+                                            <td><?php if ($a->status == "Y") { ?>
+                                                    <button type="button" class="btn btn-info">DI TERIMA</button>
+                                                <?php } elseif ($a->status == "T") { ?>
+                                                    <button type="button" class="btn btn-danger">DI TOLAK</button>
+                                                <?php } elseif ($a->status == "N") { ?>
+                                                    <button type="button" class="btn btn-warning">MENUNGGU</button>
+                                                <?php  } ?>
+                                            </td>
                                             <td>
-                                                <div class="form-button-action">
-                                                    <button data-target="#edit-pinjaman<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_pinjaman/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
-                                                </div>
+
+                                                <?php if ($a->status == "T") { ?>
+                                                    <div class="form-button-action">
+                                                        <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_pinjaman/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
+                                                    </div>
+                                                <?php } elseif ($a->status == "N") { ?>
+                                                    <div class="form-button-action">
+                                                        <button data-target="#terima-pinjaman<?= $a->id ?>" type="button" data-toggle="modal" title="Terima Data" class="btn btn-link btn-info btn-lg" data-original-title="Edit Task">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                        <button data-target="#edit-pinjaman<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <a href="#!" onclick="tolakconfirm('<?php echo site_url('admin/tolak_pinjaman/' . $a->id) ?>')" class="btn btn-link btn-warning btn-lg"><i class="fa fa-minus"></i></a>
+                                                    </div>
+                                                <?php } elseif ($a->status == "Y") { ?>
+                                                    <div class="form-button-action">
+                                                        <button data-target="#edit-pinjaman<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <div class="form-button-action">
+                                                            <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_pinjaman/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
+                                                        </div>
+                                                    </div>
+                                                <?php  } ?>
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="edit-pinjaman<?= $a->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -79,7 +107,6 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-
                                                         <form action="<?= base_url('admin/update_pinjaman'); ?>" method="post" enctype="multipart/form-data">
                                                             <div class="row">
                                                                 <input hidden type="text" class="form-control" id="id" name="id" placeholder="id" value="<?= $a->id ?>">
@@ -161,6 +188,59 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="modal fade" id="tolakmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Apakah Kamu Yakin?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Data yang ditolak tidak akan bisa dikembalikan.</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        <a id="btn-tolak" class="btn btn-danger" href="#">Tolak</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="terima-pinjaman<?= $a->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header no-bd">
+                                                        <h5 class="modal-title">
+                                                            <span class="fw-mediumbold">
+                                                                Terima</span>
+                                                            <span class="fw-light">
+                                                                Pinjaman
+                                                            </span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="<?= base_url('admin/terima_pinjaman'); ?>" method="post" enctype="multipart/form-data">
+                                                            <div class="row">
+                                                                <input hidden type="text" class="form-control" id="id" name="id" placeholder="id" value="<?= $a->id ?>">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group form-group-default">
+                                                                        <label>Bunga Pinjaman</label>
+                                                                        <input type="text" class="form-control" id="bunga" name="bunga" placeholder="Lama Bunga" value="<?= $a->bunga ?>">
+                                                                        <?= form_error('bunga', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer no-bd">
+                                                                <button type="submit" id="addRowButton" class="btn btn-primary">Terima</button>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     <?php } ?>
                                 </tbody>
@@ -213,7 +293,6 @@
                                 <?= form_error('jumlah', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
-
                         <div class="col-md-6 pr-0 ">
                             <div class="form-group form-group-default">
                                 <label>Lama Pinjaman</label>
@@ -250,7 +329,13 @@
         $('#btn-delete').attr('href', url);
         $('#deleteModal').modal();
     }
+
+    function tolakconfirm(url) {
+        $('#btn-tolak').attr('href', url);
+        $('#tolakmodal').modal();
+    }
 </script>
+
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable();

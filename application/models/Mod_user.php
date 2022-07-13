@@ -208,4 +208,9 @@ class Mod_user extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('angsuran'); // Untuk mengeksekusi perintah delete data
     }
+    function terimapinjaman($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('pinjaman', $data);
+    }
 }
