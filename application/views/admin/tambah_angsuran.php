@@ -3,11 +3,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<?php echo
-$bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-$hasil = $bunga / $angsuran->lama;
-$total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
-?>
+
 
 <div class="main-panel">
     <div class="content">

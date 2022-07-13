@@ -763,9 +763,15 @@ class Admin extends MY_Controller
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        $angsuran = $data['angsuran'];
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
-        // dead($data['perlama']);
+        $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
+        $hasil = ($bunga / $angsuran->lama);
+        $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
+
+        $data['total'] = $total;
+        // dead($data['total']);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()
