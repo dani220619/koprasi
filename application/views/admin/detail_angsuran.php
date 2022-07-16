@@ -22,7 +22,6 @@
             $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
             $hasil = $bunga / $angsuran->lama;
             $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
-
             $lunas =  $angsuran->jumlah + $bunga;
             $nilai = $angsuran->total_angsuran;
             ?>

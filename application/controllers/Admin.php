@@ -766,12 +766,13 @@ class Admin extends MY_Controller
         $angsuran = $data['angsuran'];
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
+
         $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-        $hasil = ($bunga / $angsuran->lama);
+        $hasil = $bunga / $angsuran->lama;
         $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
 
         $data['total'] = $total;
-        // dead($data['total']);
+        // dead($id);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()
