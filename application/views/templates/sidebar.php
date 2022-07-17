@@ -124,6 +124,13 @@
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('admin/simpanan_anggota') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-plus-circle"></i>
+                             <p>Simpanan</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
                  <?php } ?>
                  <li class="nav-item">
                      <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">

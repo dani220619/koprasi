@@ -622,6 +622,8 @@ class Admin extends MY_Controller
         $save  = array(
             'id' => rand(00000, 99999),
             'nik' => $this->input->post('nik'),
+            'metode_pembayaran' => "Manual",
+            'status' => "200",
             'jumlah' => $this->input->post('jumlah'),
             'tanggal_bayar' => date("Y-m-d H:i:s"),
 
@@ -757,21 +759,19 @@ class Admin extends MY_Controller
         // dead($data['lama']);
         $this->template->load('layoutbackend', 'admin/list_angsuran', $data);
     }
+
     public function tambah_angsuran($id)
     {
         $data['title'] = "Tambah Angsuran Data";
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
-        $angsuran = $data['angsuran'];
+        // $angsuran = $data['angsuran'];
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
 
-        $bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-        $hasil = $bunga / $angsuran->lama;
-        $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
 
-        $data['total'] = $total;
+        // $data['total'] = $total;
         // dead($id);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
@@ -935,6 +935,57 @@ class Admin extends MY_Controller
     }
 
 
+    public function simpanan_anggota()
+    {
+        $data['title'] = "Simpanan Data";
+        $id_user = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $nik = $id_user['nik'];
+        $data['simpanan_anggota'] = $this->Mod_user->simpanan_anggota($nik)->result();
+        $data['jml'] = $this->Mod_admin->total_simpanan($nik)->row_array();
+        // dead($nik);
+        $this->template->load('layoutbackend', 'admin/simpanan_anggota', $data);
+    }
+    public function add_simpanan_anggota()
+    {
+        $data['title'] = "Simpanan Data";
+        $id_user = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $nik = $id_user['nik'];
+        $data['user'] = $id_user;
+        $data['simpanan_anggota'] = $this->Mod_user->simpanan_anggota($nik)->result();
+        $data['jml'] = $this->Mod_admin->total_simpanan($nik)->row_array();
+        $data['simpanan'] = $this->Mod_user->getnik($nik)->row_array();
+        // dead($data['user']);
+        $this->template->load('layoutbackend', 'admin/add_simpanan_anggota', $data);
+    }
+
+    public function insert_simpanan_anggota()
+    {
+        // var_dump($this->input->post('username'));
+        $metode_pembayaran = $this->input->post('metode_pembayaran');
+        $statustype = $this->input->post('result_type');
+        $statusdata = $this->input->post('result_data');
+        $json = json_decode($statusdata, true);
+        $status = ($metode_pembayaran == 'Manual' ? '0' : ($statustype == 'success' ? '200' : ($statustype == 'pending' ? '100' : '200')));
+        $orderid = ($metode_pembayaran == 'Manual' ? '' : $json['order_id']);
+        $no_virtual = ($metode_pembayaran == 'Manual' ? '' : $json['va_numbers'][0]['va_number'] . '|' . $json['va_numbers'][0]['bank']);
+        $save  = array(
+            'id' => rand(00000, 99999),
+            'nik' => $this->input->post('nik'),
+            'jumlah' => $this->input->post('jumlah'),
+            'metode_pembayaran' => $metode_pembayaran,
+            'status' => $status,
+            'order_id' => $orderid,
+            'no_virtual' => $no_virtual,
+            'tanggal_bayar' => date("Y-m-d H:i:s"),
+
+        );
+        // dead($save);
+        $this->Mod_user->insertSimpanan("simpanan", $save);
+        redirect('admin/simpanan_anggota');
+        // echo json_encode(array("status" => TRUE));
+    }
+
+
     public function backup()
     {
 
@@ -942,10 +993,10 @@ class Admin extends MY_Controller
         $data['setting_school'] = "DATA";
         $prefs = [
             'format' => 'zip',
-            'filename' => $data['setting_school']['setting_value'] . '-' . date("Y-m-d H-i-s") . '.sql'
+            'filename' => $data['setting_school'] . '-' . date("Y-m-d H-i-s") . '.sql'
         ];
         $backup = $this->dbutil->backup($prefs);
-        $file_name = $data['setting_school']['setting_value'] . '-' . date("Y-m-d-H-i-s") . '.zip';
+        $file_name = $data['setting_school'] . '-' . date("Y-m-d-H-i-s") . '.zip';
         $this->zip->download($file_name);
     }
 

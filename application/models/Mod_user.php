@@ -179,7 +179,8 @@ class Mod_user extends CI_Model
         $query = $this->db->query("
 		select *
 		from simpanan 
-		where nik = " . $nik . "
+
+		where nik = " . $nik . " and status = 200
 		");
         return $query;
     }
@@ -212,5 +213,16 @@ class Mod_user extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->update('pinjaman', $data);
+    }
+    public function simpanan_anggota($nik)
+    {
+        $query = $this->db->query("
+		select s.*, tu.*
+		from simpanan s
+        left join tbl_user tu
+        on s.nik=tu.nik
+		where s.nik = " . $nik . "
+		");
+        return $query;
     }
 }

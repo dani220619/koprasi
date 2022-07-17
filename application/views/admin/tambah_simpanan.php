@@ -31,7 +31,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var rupiah = document.getElementById('jumlah');
+    var rupiah = document.getElementById('jml');
     rupiah.addEventListener('keyup', function(e) {
         // tambahkan 'Rp.' pada saat form di ketik
         // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka

@@ -39,7 +39,7 @@ class Mod_admin extends CI_Model
         $query = $this->db->query("
          select sum(jumlah) as jumlah
         from simpanan
-        where nik = " . $nik . "
+        where nik = " . $nik . " and status = 200
         ");
         return $query;
     }

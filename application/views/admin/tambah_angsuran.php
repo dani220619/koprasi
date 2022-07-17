@@ -79,7 +79,7 @@
                         <div class="card-header">
                             <div class="card-title">Tambah Angsuran</div>
                         </div>
-                        <form id="form-spp" class="angsuran" method="post" action="<?= base_url('admin/insert_angsuran'); ?>" enctype="multipart/form-data">
+                        <form id="form_spp" name="form_spp" class="angsuran" method="post" action="<?= base_url('admin/insert_angsuran'); ?>" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
@@ -94,22 +94,25 @@
                                         <label>Lama</label>
                                         <select class="bootstrap-select strings selectpicker form-control" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                             <?php
+                                            $id = $angsuran->id;
                                             $lama =
-                                                $this->Mod_admin->detail_angsuran($angsuran->id)->row_array();
+                                                $this->Mod_admin->detail_angsuran($id)->row_array();
                                             $parm_lama = $lama['lama'];
                                             for ($i = 1; $i <= $parm_lama; $i++) { ?>
                                                 <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
 
                                             <?php } ?>
                                         </select>
-
                                     </div>
 
+                                    <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="Masukan No Angsuran">
+                                    <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $angsuran->bunga ?>" placeholder="Masukan No Angsuran">
+                                    <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $angsuran->lama ?>" placeholder="Masukan No Angsuran">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="form-group">
                                             <label for="jumlah">Jumlah</label>
-                                            <input type="text" class="form-control" id="nilai" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
-                                            <input type="text" class="form-control" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
+
+                                            <input type="text" class="form-control" id="nilai" name="nilai" value="" placeholder="Masukan Jumlah" readonly>
                                             <small id="emailHelp2" class="form-text text-muted"></small>
                                         </div>
                                     </div>
@@ -132,4 +135,17 @@
         $('#btn-delete').attr('href', url);
         $('#deleteModal').modal();
     }
+    $(document).ready(function() {
+        $('#jumlah_angsuran').change(function() {
+            var jumlah_angsuran = $('#jumlah_angsuran').val();
+            var jumlah = $('#jumlah').val();
+            var bunga = $('#bunga').val();
+            var lama = $('#lama').val();
+            var total = parseInt(jumlah) / 100 * parseInt(bunga);
+            var hasil = parseInt(total) / parseInt(lama)
+            var hastot = (parseInt(jumlah) / parseInt(lama)) + parseInt(hasil)
+            var b1 = Math.ceil(hastot);
+            $("#nilai").val(b1);
+        })
+    })
 </script>

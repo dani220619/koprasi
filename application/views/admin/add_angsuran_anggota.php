@@ -3,11 +3,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<?php echo
-$bunga = $angsuran->jumlah / 100 * $angsuran->bunga;
-$hasil = $bunga / $angsuran->lama;
-$total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
-?>
+
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -101,8 +97,9 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
                                 <label>Lama</label>
                                 <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                     <?php
+                                    $id = $angsuran->id;
                                     $lama =
-                                        $this->Mod_admin->detail_angsuran($angsuran->id)->row_array();
+                                        $this->Mod_admin->detail_angsuran($id)->row_array();
                                     $parm_lama = $lama['lama'];
                                     for ($i = 1; $i <= $parm_lama; $i++) { ?>
                                         <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
@@ -112,14 +109,16 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
 
                             </div>
 
-
+                            <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="Masukan No Angsuran">
+                            <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $angsuran->bunga ?>" placeholder="Masukan No Angsuran">
+                            <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $angsuran->lama ?>" placeholder="Masukan No Angsuran">
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="jumlah">Jumlah</label>
                                     <input type="number" class="form-control bil1" id="bil1" name="bil1" value="" placeholder="Masukan Jumlah" hidden>
-                                    <input type="number" class="form-control" id="bil2" name="nilai" value="<?= $total ?>" placeholder="Masukan Jumlah" hidden>
+                                    <input type="number" class="form-control" id="bil2" name="nilai" value="" placeholder="Masukan Jumlah" readonly>
                                     <input type="number" class="form-control" id="hasil" name="hasil" value="" placeholder="Masukan Jumlah" hidden>
-                                    <input type="text" class="form-control" id="total" value="<?= rupiah($total) ?>" placeholder="Masukan Jumlah" readonly>
+
                                     <small id="emailHelp2" class="form-text text-muted"></small>
                                 </div>
                             </div>
@@ -161,6 +160,21 @@ $total = ($angsuran->jumlah / $angsuran->lama) + $hasil;
             var bil2 = $('#bil2').val();
             var total = parseInt(bil1) * parseInt(bil2);
             $("#hasil").val(total);
+        })
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('#jumlah_angsuran').change(function() {
+            var jumlah_angsuran = $('#jumlah_angsuran').val();
+            var jumlah = $('#jumlah').val();
+            var bunga = $('#bunga').val();
+            var lama = $('#lama').val();
+            var total = parseInt(jumlah) / 100 * parseInt(bunga);
+            var hasil = parseInt(total) / parseInt(lama)
+            var hastot = (parseInt(jumlah) / parseInt(lama)) + parseInt(hasil)
+            var b1 = Math.ceil(hastot);
+            $("#bil2").val(b1);
         })
     })
 </script>

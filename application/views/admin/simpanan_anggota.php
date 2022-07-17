@@ -11,8 +11,13 @@
                       <div class="card-header">
                           <div class="d-flex align-items-center">
                               <h4 class="card-title"><?= $title ?></h4>
+
+                              <a href="<?= base_url('admin/add_simpanan_anggota') ?>" class="btn btn-success btn-round ml-auto">
+                                  <i class="fas fa-cart-plus"></i>
+                                  Tambah Simpanan
+                              </a>
                               <a href="<?= base_url('admin/simpanan') ?>" class="btn btn-primary btn-round ml-auto">
-                                  <i class="fas fa-arrow-alt-circle-left"></i>
+                                  <i class="fas fa-arrow-alt-circle-right"></i>
                                   Kembali
                               </a>
                           </div>
@@ -37,7 +42,8 @@
                                   <tbody class="center">
                                       <?php
                                         $no = 1;
-                                        foreach ($det_simpanan as $a) { ?>
+                                        foreach ($simpanan_anggota as $a) { ?>
+
                                           <tr>
                                               <td><?= $no++ ?></td>
                                               <td><?= $a->nik ?></td>
@@ -53,11 +59,11 @@
                                               <td><?= $a->tanggal_bayar ?></td>
                                               <td>
                                                   <div class="form-button-action">
-                                                      <button data-target="#edit-apk<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                          <i class="fa fa-edit"></i>
-                                                      </button>
-                                                      <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
+
+                                                      <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete/' . $a->id) ?>')" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                               </td>
+
+
                                           </tr>
                                           <div class="modal fade" id="edit-apk<?= $a->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
