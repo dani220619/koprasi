@@ -85,10 +85,10 @@
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
                                     <!-- <input type="text" class="form-control" id="id" name="id" placeholder="Masukan nik" value=""> -->
-                                    <input type="text" hidden class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $angsuran->no_pinjaman ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="id_user" name="id_user" value="<?= $angsuran->id_user ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $angsuran->id ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="full_name" value="<?= $angsuran->full_name ?>" placeholder="Masukan No Angsuran">
+                                    <input type="text" class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $pinjaman->no_pinjaman ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" class="form-control" id="id_user" name="id_user" value="<?= $pinjaman->id_user ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $pinjaman->id ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" class="form-control" id="full_name" value="<?= $pinjaman->full_name ?>" placeholder="Masukan No pinjaman">
                                     <input type="hidden" name="result_type" id="result-type" value="">
                                     <input type="hidden" name="result_data" id="result-data" value="">
                                     <div class="col-md-12 col-lg-12">

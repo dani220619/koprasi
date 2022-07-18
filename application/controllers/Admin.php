@@ -762,6 +762,7 @@ class Admin extends MY_Controller
 
     public function tambah_angsuran($id)
     {
+
         $data['title'] = "Tambah Angsuran Data";
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();

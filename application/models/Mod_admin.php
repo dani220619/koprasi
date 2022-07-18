@@ -169,7 +169,11 @@ class Mod_admin extends CI_Model
     public function pinjaman_ang($id)
     {
         $query = $this->db->query("
-        select * from pinjaman where id = " . $id . "
+        select * 
+        from pinjaman p
+        left join tbl_user tu
+        on p.id_user=tu.id_user
+        where id = " . $id . "
         ");
         return $query;
     }
