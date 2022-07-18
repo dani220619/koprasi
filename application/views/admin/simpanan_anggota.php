@@ -60,7 +60,7 @@
                                               <td>
                                                   <div class="form-button-action">
 
-                                                      <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete/' . $a->id) ?>')" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
+                                                      <a href="<?= base_url('admin/cetak_persimpanan/' . $a->id) ?>" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                               </td>
 
 

@@ -47,7 +47,7 @@
                                                 <td><?= $a->no_virtual ?></td>
                                                 <td>
                                                     <div class="form-button-action">
-                                                        <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
+                                                        <a href="<?= base_url('admin/cetak_perangsuran/' . $a->id) ?>" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -108,6 +108,13 @@
                              </ul>
                          </div>
                      </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('admin/laporan') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-print"></i>
+                             <p>Laporan</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
                  <?php } ?>
                  <?php if ($_SESSION["id_level"] == ("3")) { ?>
                      <li class="nav-item active">

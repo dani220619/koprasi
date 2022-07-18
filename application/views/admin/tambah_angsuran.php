@@ -46,6 +46,7 @@
                                                 <td><?php echo ($a->status == '200' ? 'Lunas' : ($a->status == '100' ? 'Lunas' : 'Pending')) ?></td>
                                                 <td>
                                                     <div class="form-button-action">
+                                                        <a href="<?= base_url('admin/cetak_perangsuran/' . $a->id) ?>" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                                         <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_angsuran/' . $a->id) ?>')" class="btn btn-link btn-danger btn-lg"><i class="fa fa-times"></i></a>
                                                     </div>
                                                 </td>

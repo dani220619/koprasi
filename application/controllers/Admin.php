@@ -792,7 +792,7 @@ class Admin extends MY_Controller
                     'nilai' => $this->input->post('nilai'),
                     'tanggal' => date("Y-m-d H:i:s"),
                     'metode_pembayaran' => "Manual",
-                    'status' => "100"
+                    'status' => "200"
                 );
 
             $key;
@@ -983,6 +983,98 @@ class Admin extends MY_Controller
         $this->Mod_user->insertSimpanan("simpanan", $save);
         redirect('admin/simpanan_anggota');
         // echo json_encode(array("status" => TRUE));
+    }
+
+    public function cetak_perangsuran($id)
+    {
+        $data['title'] = "Tambah Angsuran Data";
+        // $data['lama'] = ['6', '10', '12'];
+        $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_perangsuran($id)->result();
+        $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        // $angsuran = $data['angsuran'];
+        $data['lama'] = $this->Mod_admin->lama()->result();
+        $data['sb'] = $this->Mod_admin->sdhbyr()->result();
+
+
+        // $data['total'] = $total;
+        // dead($data['riwayat_angsuran']);
+        $this->load->view('admin/cetak_perangsuran', $data);
+    }
+    public function cetak_persimpanan($id)
+    {
+        $data['title'] = "Simpanan Data";
+        $id_user = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        $data['simpanan_anggota'] = $this->Mod_user->persimpanan_anggota($id)->result();
+        $data['jml'] = $this->Mod_admin->total_simpanan($id)->row_array();
+        // dead($nik);
+        // $data['total'] = $total;
+        // dead($data['riwayat_angsuran']);
+        $this->load->view('admin/cetak_persimpanan', $data);
+    }
+
+    function laporan()
+    {
+        if (isset($_GET['filter']) && !empty($_GET['filter'])) {
+            $filter = $_GET['filter'];
+            if ($filter == '1') {
+                $id_user = $_GET['id_user'];
+                $ket = 'Data Transaksi dari Siswa dengan Nomor Induk ' . $id_user;
+                $url_cetak = 'admin/cetak1?&id_user=' . $id_user;
+                $url_excel = 'admin/excel1?&id_user=' . $id_user;
+                $anggota = $this->Mod_user->view_by_anggota($id_user)->result();
+            } else if ($filter == '2') {
+                $tanggal1 = $_GET['tanggal'];
+                $tanggal2 = $_GET['tanggal2'];
+                $ket = 'Data Transaksi dari Tanggal ' . date('d-m-y', strtotime($tanggal1)) . ' - ' . date('d-m-y', strtotime($tanggal2));
+                $url_cetak = 'admin/cetak2?tanggal1=' . $tanggal1 . '&tanggal2=' . $tanggal2 . '';
+                $url_excel = 'admin/cetak1?tanggal1=' . $tanggal1 . '&tanggal2=' . $tanggal2 . '';
+                $anggota = $this->Mod_user->view_by_date($tanggal1, $tanggal2)->result();
+            }
+        } else {
+            $ket = 'Semua Data Angsuran';
+            $url_cetak = 'admin/cetak';
+            $url_excel = 'admin/excel';
+            $anggota = $this->Mod_user->view_all()->result();
+        }
+
+        $data['ket'] = $ket;
+        $data['url_cetak'] = base_url($url_cetak);
+        $data['url_excel'] = base_url($url_excel);
+        $data['anggota'] = $anggota;
+        // dead($data['anggota']);
+        $data['anggota_list'] = $this->Mod_user->anggota()->result();
+        // $data['tahun_ajaran'] = $this->Mod_user->tahun()->result();
+        $data['title'] = 'Laporan Data Angsuran Diterima';
+        $data['user'] = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        $this->template->load('layoutbackend', 'admin/laporan', $data);
+    }
+    public function cetak()
+    {
+        $ket = 'Semua Data Angsuran Diterima';
+
+        $data['anggota'] = $this->Mod_user->view_all()->result();;
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_angsuran', $data);
+    }
+    public function cetak1()
+    {
+        $id_user = $_GET['id_user'];
+        $ket = 'Data Siswa Dengan Id ' . $id_user;
+
+        $data['anggota'] = $this->Mod_user->view_by_anggota($id_user)->result();
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_angsuran', $data);
+    }
+    public function cetak2()
+    {
+        $tanggal1 = $_GET['tanggal1'];
+        $tanggal2 = $_GET['tanggal2'];
+        $ket = 'Data Transaksi dari Tanggal ' . date('d-m-y', strtotime($tanggal1)) . ' s/d ' . date('d-m-y', strtotime($tanggal2));
+        $data['anggota'] = $this->Mod_user->view_by_date($tanggal1, $tanggal2)->result();
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_angsuran', $data);
     }
 
 

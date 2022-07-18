@@ -109,6 +109,16 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
+    public function riwayat_perangsuran($id)
+    {
+        $query = $this->db->query("
+        select *
+        from angsuran
+        where id = " . $id . "
+        order by jumlah_angsuran asc
+        ");
+        return $query;
+    }
     public function lama()
     {
         $query = $this->db->query("

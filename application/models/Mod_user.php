@@ -225,4 +225,56 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    public function persimpanan_anggota($nik)
+    {
+        $query = $this->db->query("
+		select s.*, tu.*
+		from simpanan s
+        left join tbl_user tu
+        on s.nik=tu.nik
+		where s.id = " . $nik . "
+		");
+        return $query;
+    }
+    public function view_all()
+    {
+        $query = $this->db->query("
+		select a.*, tu.full_name 
+        from angsuran a
+        left join tbl_user tu
+        on a.id_user=tu.id_user
+        order by a.status desc
+		");
+        return $query;
+    }
+    public function anggota()
+    {
+        $query = $this->db->query("
+		select * from tbl_user where id_level = 3
+		");
+        return $query;
+    }
+    public function view_by_date($tanggal1, $tanggal2)
+    {
+        $this->db->select('*');
+        $this->db->from('angsuran');
+        $this->db->join('tbl_user', 'angsuran.id_user = tbl_user.id_user');
+        // $this->db->join('user', 'spp_bulanan.id = user.id');
+        $this->db->where('tanggal BETWEEN"' . date('Y-m-d', strtotime($tanggal1)) . '"and"' . date('Y-m-d', strtotime($tanggal2)) . '"');
+        $this->db->order_by('tanggal');
+        return $this->db->get(); // Tampilkan data transaksi sesuai tanggal yang diinput oleh user pada filter  
+    }
+
+    public function view_by_anggota($id)
+    {
+        $query = $this->db->query("
+		select a.*, tu.full_name 
+        from angsuran a
+        left join tbl_user tu
+        on a.id_user=tu.id_user
+        where a.id_user = " . $id . "
+        order by a.status desc
+		");
+        return $query;
+    }
 }

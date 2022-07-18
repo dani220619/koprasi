@@ -53,6 +53,7 @@
                                               <td><?= $a->tanggal_bayar ?></td>
                                               <td>
                                                   <div class="form-button-action">
+                                                      <a href="<?= base_url('admin/cetak_persimpanan/' . $a->id) ?>" class="btn btn-link btn-primary btn-lg"><i class="fa fa-print"></i></a>
                                                       <button data-target="#edit-apk<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                           <i class="fa fa-edit"></i>
                                                       </button>
