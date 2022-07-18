@@ -97,10 +97,7 @@
                                 <label>Lama</label>
                                 <select class="bootstrap-select strings selectpicker" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
                                     <?php
-                                    $id = $angsuran->id;
-                                    $lama =
-                                        $this->Mod_admin->detail_angsuran($id)->row_array();
-                                    $parm_lama = $lama['lama'];
+
                                     for ($i = 1; $i <= $parm_lama; $i++) { ?>
                                         <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
 

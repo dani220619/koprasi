@@ -766,6 +766,9 @@ class Admin extends MY_Controller
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        $lama = $this->Mod_admin->detail_angsuran($id)->row_array();
+        $parm_lama = $lama['lama'];
+        $data['parm_lama'] = $parm_lama;
         // $angsuran = $data['angsuran'];
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
@@ -872,6 +875,9 @@ class Admin extends MY_Controller
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
         $data['lama'] = $this->Mod_admin->lama()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
+        $lama = $this->Mod_admin->detail_angsuran($id)->row_array();
+        $parm_lama = $lama['lama'];
+        $data['parm_lama'] = $parm_lama;
 
         $this->template->load('layoutbackend', 'admin/add_angsuran_anggota', $data);
     }
