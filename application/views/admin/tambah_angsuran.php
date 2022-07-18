@@ -85,10 +85,10 @@
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
                                     <!-- <input type="text" class="form-control" id="id" name="id" placeholder="Masukan nik" value=""> -->
-                                    <input type="text" class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $pinjaman->no_pinjaman ?>" placeholder="Masukan No pinjaman">
-                                    <input type="text" class="form-control" id="id_user" name="id_user" value="<?= $pinjaman->id_user ?>" placeholder="Masukan No pinjaman">
-                                    <input type="text" class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $pinjaman->id ?>" placeholder="Masukan No pinjaman">
-                                    <input type="text" class="form-control" id="full_name" value="<?= $pinjaman->full_name ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $pinjaman->no_pinjaman ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="id_user" name="id_user" value="<?= $pinjaman->id_user ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $pinjaman->id ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="full_name" value="<?= $pinjaman->full_name ?>" placeholder="Masukan No pinjaman">
                                     <input type="hidden" name="result_type" id="result-type" value="">
                                     <input type="hidden" name="result_data" id="result-data" value="">
                                     <div class="col-md-12 col-lg-12">
@@ -104,9 +104,9 @@
                                         </select>
                                     </div>
 
-                                    <input type="text" class="form-control" id="jumlah" name="jumlah" value="<?= $pinjaman->jumlah ?>" placeholder="Masukan No pinjaman">
-                                    <input type="text" class="form-control" id="bunga" name="bunga" value="<?= $pinjaman->bunga ?>" placeholder="Masukan No pinjaman">
-                                    <input type="text" class="form-control" id="lama" name="lama" value="<?= $pinjaman->lama ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $pinjaman->jumlah ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $pinjaman->bunga ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $pinjaman->lama ?>" placeholder="Masukan No pinjaman">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="form-group">
                                             <label for="jumlah">Jumlah</label>

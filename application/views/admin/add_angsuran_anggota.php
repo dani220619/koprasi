@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Detail Angsuran <?= $angsuran->full_name ?></h4>
+                                <h4 class="card-title">Detail Angsuran <?= $pinjaman->full_name ?></h4>
                             </div>
                         </div>
 
@@ -85,10 +85,10 @@
                                 <div class="row">
                                     <!-- <input hidden type="number" class="form-control" id="id" name="id" placeholder="Masukan id"> -->
                                     <!-- <input hidden type="number" class="form-control" id="nik" name="nik" placeholder="Masukan nik" value=""> -->
-                                    <input type="text" hidden class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $angsuran->no_pinjaman ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="id_user" name="id_user" value="<?= $angsuran->id_user ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $angsuran->id ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="full_name" value="<?= $angsuran->full_name ?>" placeholder="Masukan No Angsuran">
+                                    <input type="text" hidden class="form-control" id="no_pinjaman" name="no_pinjaman" value="<?= $pinjaman->no_pinjaman ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="id_user" name="id_user" value="<?= $pinjaman->id_user ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="id_pinjaman" name="id_pinjaman" value="<?= $pinjaman->id ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" hidden class="form-control" id="full_name" value="<?= $pinjaman->full_name ?>" placeholder="Masukan No Angsuran">
                                     <input type="hidden" name="result_type" id="result-type" value="">
                                 </div>
                                 <input type="hidden" name="result_data" id="result-data" value="">
@@ -105,9 +105,9 @@
                                 </select>
                             </div>
 
-                            <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="Masukan No Angsuran">
-                            <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $angsuran->bunga ?>" placeholder="Masukan No Angsuran">
-                            <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $angsuran->lama ?>" placeholder="Masukan No Angsuran">
+                            <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $pinjaman->jumlah ?>" placeholder="Masukan No pinjaman">
+                            <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $pinjaman->bunga ?>" placeholder="Masukan No pinjaman">
+                            <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $pinjaman->lama ?>" placeholder="Masukan No pinjaman">
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="jumlah">Jumlah</label>

@@ -63,7 +63,6 @@
             <?php
             $no = 1;
             foreach ($riwayat_angsuran as $a) { ?>
-
                 <tr>
                     <td><?= $no++ ?></td>
                     <td><?= $a->no_angsuran ?></td>
@@ -72,7 +71,6 @@
                     <td><?php echo ($a->status == '200' ? 'Lunas' : ($a->status == '100' ? 'Lunas' : 'Pending')) ?></td>
                     <td><?= $a->metode_pembayaran ?></td>
                     <td><?= $a->no_virtual ?></td>
-
                 </tr>
 
             <?php } ?>

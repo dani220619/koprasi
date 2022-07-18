@@ -871,6 +871,7 @@ class Admin extends MY_Controller
         $data['title'] = "Tambah Angsuran Data";
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        $data['pinjaman'] = $this->Mod_admin->pinjaman_ang($id)->row();
         $data['parm_lama'] = $this->Mod_admin->lama($id)->row_array();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
         $data['lama'] = $this->Mod_admin->lama_jml()->row_array();
@@ -995,7 +996,7 @@ class Admin extends MY_Controller
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_perangsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
         // $angsuran = $data['angsuran'];
-        $data['lama'] = $this->Mod_admin->lama()->result();
+        $data['lama'] = $this->Mod_admin->lama_jml()->result();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
 
 
