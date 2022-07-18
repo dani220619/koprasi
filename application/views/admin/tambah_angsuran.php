@@ -94,11 +94,12 @@
                                     <div class="col-md-12 col-lg-12">
                                         <label>Lama</label>
                                         <select class="bootstrap-select strings selectpicker form-control" title="Jumlah Angsuran" name="jumlah_angsuran[]" id="jumlah_angsuran" data-actions-box="true" data-virtual-scroll="false" data-live-search="true" multiple required>
-                                            <?php
-                                            
-                                            for ($i = 1; $i <= $parm_lama; $i++) { ?>
-                                                <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
 
+                                            <?php
+                                            // dead($parm_lama);
+
+                                            for ($i = 1; $i <= $parm_lama['lama']; $i++) { ?>
+                                                <option value=" <?php echo $i ?>"> <?php echo $i ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>

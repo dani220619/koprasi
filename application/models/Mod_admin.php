@@ -119,11 +119,19 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
-    public function lama()
+    public function lama($id)
+    {
+        $query = $this->db->query("
+        select lama
+        from pinjaman where id = " . $id . "
+        ");
+        return $query;
+    }
+    public function lama_jml()
     {
         $query = $this->db->query("
         select *
-        from lama
+        from lama 
         ");
         return $query;
     }

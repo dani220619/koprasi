@@ -766,16 +766,13 @@ class Admin extends MY_Controller
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
-        $lama = $this->Mod_admin->detail_angsuran($id)->row_array();
-        $parm_lama = $lama['lama'];
-        $data['parm_lama'] = $parm_lama;
         // $angsuran = $data['angsuran'];
-        $data['lama'] = $this->Mod_admin->lama()->result();
+        $data['parm_lama'] = $this->Mod_admin->lama($id)->row_array();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
 
 
         // $data['total'] = $total;
-        // dead($id);
+        // dead($data['parm_lama']);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()
@@ -870,14 +867,12 @@ class Admin extends MY_Controller
     public function add_angsuran_anggota($id)
     {
         $data['title'] = "Tambah Angsuran Data";
-
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
-        $data['lama'] = $this->Mod_admin->lama()->result();
+        $data['parm_lama'] = $this->Mod_admin->lama($id)->row_array();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
-        $lama = $this->Mod_admin->detail_angsuran($id)->row_array();
-        $parm_lama = $lama['lama'];
-        $data['parm_lama'] = $parm_lama;
+        $data['lama'] = $this->Mod_admin->lama_jml()->row_array();
+        // dead($data['sb']);
 
         $this->template->load('layoutbackend', 'admin/add_angsuran_anggota', $data);
     }
