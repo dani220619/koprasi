@@ -104,9 +104,9 @@
                                         </select>
                                     </div>
 
-                                    <input type="text" hidden class="form-control" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="bunga" name="bunga" value="<?= $angsuran->bunga ?>" placeholder="Masukan No Angsuran">
-                                    <input type="text" hidden class="form-control" id="lama" name="lama" value="<?= $angsuran->lama ?>" placeholder="Masukan No Angsuran">
+                                    <input type="text" class="form-control" id="jumlah" name="jumlah" value="<?= $pinjaman->jumlah ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" class="form-control" id="bunga" name="bunga" value="<?= $pinjaman->bunga ?>" placeholder="Masukan No pinjaman">
+                                    <input type="text" class="form-control" id="lama" name="lama" value="<?= $pinjaman->lama ?>" placeholder="Masukan No pinjaman">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="form-group">
                                             <label for="jumlah">Jumlah</label>

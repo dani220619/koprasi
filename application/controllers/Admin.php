@@ -766,13 +766,14 @@ class Admin extends MY_Controller
         // $data['lama'] = ['6', '10', '12'];
         $data['riwayat_angsuran'] = $this->Mod_admin->riwayat_angsuran($id)->result();
         $data['angsuran'] = $this->Mod_admin->detail_angsuran($id)->row();
+        $data['pinjaman'] = $this->Mod_admin->pinjaman_ang($id)->row();
         // $angsuran = $data['angsuran'];
         $data['parm_lama'] = $this->Mod_admin->lama($id)->row_array();
         $data['sb'] = $this->Mod_admin->sdhbyr()->result();
 
 
         // $data['total'] = $total;
-        // dead($data['parm_lama']);
+        // dead($data['pinjaman']);
         $this->template->load('layoutbackend', 'admin/tambah_angsuran', $data);
     }
     public function insert_angsuran()

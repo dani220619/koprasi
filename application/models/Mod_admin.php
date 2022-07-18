@@ -165,4 +165,12 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
+
+    public function pinjaman_ang($id)
+    {
+        $query = $this->db->query("
+        select * from pinjaman where id = " . $id . "
+        ");
+        return $query;
+    }
 }
