@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 23 Bulan Mei 2022 pada 19.02
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 7.4.29
+-- Generation Time: Jul 18, 2022 at 02:45 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `aplikasi`
+-- Table structure for table `angsuran`
+--
+
+CREATE TABLE `angsuran` (
+  `id` int(11) NOT NULL,
+  `id_pinjaman` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `no_angsuran` varchar(30) NOT NULL,
+  `jumlah_angsuran` int(20) NOT NULL,
+  `nilai` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `metode_pembayaran` varchar(20) NOT NULL,
+  `no_virtual` varchar(30) NOT NULL,
+  `status` char(3) NOT NULL DEFAULT '',
+  `order_id` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `angsuran`
+--
+
+INSERT INTO `angsuran` (`id`, `id_pinjaman`, `id_user`, `no_angsuran`, `jumlah_angsuran`, `nilai`, `tanggal`, `metode_pembayaran`, `no_virtual`, `status`, `order_id`) VALUES
+(32413, 783, 12, 'ANG687', 1, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32414, 783, 12, 'ANG687', 2, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32415, 783, 12, 'ANG687', 3, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32416, 783, 12, 'ANG687', 4, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32417, 783, 12, 'ANG687', 5, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32418, 783, 12, 'ANG687', 6, 200000, '2022-07-18 12:01:27', 'Manual', '', '200', ''),
+(32419, 9230, 13, 'ANG558', 1, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32420, 9230, 13, 'ANG558', 2, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32421, 9230, 13, 'ANG558', 3, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32422, 9230, 13, 'ANG558', 4, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32423, 9230, 13, 'ANG558', 5, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32424, 9230, 13, 'ANG558', 6, 400000, '2022-07-18 12:01:34', 'Manual', '', '200', ''),
+(32429, 7446, 12, 'ANG551', 1, 480000, '2022-07-18 18:54:36', 'Online', '67517664494|bca', '1', '461216809'),
+(32430, 7446, 12, 'ANG551', 2, 480000, '2022-07-18 18:54:36', 'Online', '67517664494|bca', '1', '461216809');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aplikasi`
 --
 
 CREATE TABLE `aplikasi` (
@@ -41,7 +81,7 @@ CREATE TABLE `aplikasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `aplikasi`
+-- Dumping data for table `aplikasi`
 --
 
 INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `tlp`, `title`, `nama_aplikasi`, `logo`, `copy_right`, `versi`, `tahun`) VALUES
@@ -50,7 +90,36 @@ INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `tlp`, `title`, `nama_apli
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pinjaman`
+-- Table structure for table `lama`
+--
+
+CREATE TABLE `lama` (
+  `id` int(11) NOT NULL,
+  `lama` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lama`
+--
+
+INSERT INTO `lama` (`id`, `lama`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pinjaman`
 --
 
 CREATE TABLE `pinjaman` (
@@ -60,44 +129,54 @@ CREATE TABLE `pinjaman` (
   `jumlah` varchar(30) NOT NULL,
   `tanggal` datetime NOT NULL,
   `lama` int(11) NOT NULL,
-  `bunga` int(11) NOT NULL
+  `bunga` int(11) NOT NULL,
+  `status` enum('Y','N','T') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pinjaman`
+-- Dumping data for table `pinjaman`
 --
 
-INSERT INTO `pinjaman` (`id`, `id_user`, `no_pinjaman`, `jumlah`, `tanggal`, `lama`, `bunga`) VALUES
-(1766, 13, 'PJ0003', '900000', '2022-05-23 15:29:12', 12, 11),
-(6614, 12, 'PJ0001', '500000', '2022-05-23 14:41:23', 6, 10);
+INSERT INTO `pinjaman` (`id`, `id_user`, `no_pinjaman`, `jumlah`, `tanggal`, `lama`, `bunga`, `status`) VALUES
+(783, 12, 'ANG687', '1000000', '2022-07-13 11:09:20', 6, 20, 'Y'),
+(2208, 12, 'ANG213', '1000000', '2022-07-13 12:37:08', 10, 20, 'Y'),
+(3450, 12, 'ANG360', '1000000', '2022-07-13 12:22:21', 10, 0, 'T'),
+(5721, 12, 'ANG791', '2000000', '2022-07-13 12:34:29', 6, 30, 'N'),
+(7446, 12, 'ANG551', '4000000', '2022-07-12 23:44:25', 10, 20, 'Y'),
+(8599, 12, 'ANG227', '1000000', '2022-07-18 19:31:01', 10, 20, 'Y'),
+(9230, 13, 'ANG558', '2000000', '2022-07-13 13:51:07', 6, 20, 'Y');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `simpanan`
+-- Table structure for table `simpanan`
 --
 
 CREATE TABLE `simpanan` (
   `id` int(11) NOT NULL,
   `nik` int(20) NOT NULL,
   `jumlah` int(20) NOT NULL,
+  `metode_pembayaran` varchar(10) NOT NULL,
+  `no_virtual` varchar(30) NOT NULL,
+  `status` char(4) NOT NULL,
+  `order_id` varchar(20) NOT NULL,
   `tanggal_bayar` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `simpanan`
+-- Dumping data for table `simpanan`
 --
 
-INSERT INTO `simpanan` (`id`, `nik`, `jumlah`, `tanggal_bayar`) VALUES
-(25047, 94659232, 0, '2022-05-23 00:38:34'),
-(34431, 2147483647, 100000000, '2022-05-23 17:00:28'),
-(48609, 2147483647, 1000, '2022-05-23 17:03:15'),
-(48978, 2147483647, 0, '2022-05-23 00:38:40');
+INSERT INTO `simpanan` (`id`, `nik`, `jumlah`, `metode_pembayaran`, `no_virtual`, `status`, `order_id`, `tanggal_bayar`) VALUES
+(23677, 2147483647, 300000, 'Online', '67517885561|bca', '100', '1026254428', '2022-07-17 23:29:15'),
+(37603, 94659232, 900000, 'Manual', '', '200', '', '2022-07-17 23:29:44'),
+(81405, 2147483647, 200000, 'Online', '67517087423|bca', '100', '536813375', '2022-07-17 23:21:30'),
+(86014, 94659232, 100000, 'Manual', '', '200', '', '2022-07-18 13:27:53');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_akses_menu`
+-- Table structure for table `tbl_akses_menu`
 --
 
 CREATE TABLE `tbl_akses_menu` (
@@ -108,7 +187,7 @@ CREATE TABLE `tbl_akses_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_akses_menu`
+-- Dumping data for table `tbl_akses_menu`
 --
 
 INSERT INTO `tbl_akses_menu` (`id`, `id_level`, `id_menu`, `view_level`) VALUES
@@ -122,7 +201,7 @@ INSERT INTO `tbl_akses_menu` (`id`, `id_level`, `id_menu`, `view_level`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_akses_submenu`
+-- Table structure for table `tbl_akses_submenu`
 --
 
 CREATE TABLE `tbl_akses_submenu` (
@@ -138,7 +217,7 @@ CREATE TABLE `tbl_akses_submenu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_akses_submenu`
+-- Dumping data for table `tbl_akses_submenu`
 --
 
 INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `add_level`, `edit_level`, `delete_level`, `print_level`, `upload_level`) VALUES
@@ -177,7 +256,7 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_menu`
+-- Table structure for table `tbl_menu`
 --
 
 CREATE TABLE `tbl_menu` (
@@ -191,7 +270,7 @@ CREATE TABLE `tbl_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_menu`
+-- Dumping data for table `tbl_menu`
 --
 
 INSERT INTO `tbl_menu` (`id_menu`, `nama_menu`, `link`, `icon`, `urutan`, `is_active`, `parent`) VALUES
@@ -201,7 +280,7 @@ INSERT INTO `tbl_menu` (`id_menu`, `nama_menu`, `link`, `icon`, `urutan`, `is_ac
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_submenu`
+-- Table structure for table `tbl_submenu`
 --
 
 CREATE TABLE `tbl_submenu` (
@@ -214,7 +293,7 @@ CREATE TABLE `tbl_submenu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_submenu`
+-- Dumping data for table `tbl_submenu`
 --
 
 INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_menu`, `is_active`) VALUES
@@ -232,7 +311,7 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_user`
+-- Table structure for table `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
@@ -250,19 +329,20 @@ CREATE TABLE `tbl_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_user`
+-- Dumping data for table `tbl_user`
 --
 
 INSERT INTO `tbl_user` (`id_user`, `nik`, `username`, `full_name`, `tlp`, `alamat`, `jenis_kelamin`, `password`, `id_level`, `image`, `is_active`) VALUES
 (10, 0, 'admin', 'dani', '085797887711', '', 'laki-laki', '$2y$05$oDJNmsPd0unSj1xbw2qP6.oeeuDhBhi.PBrwsCD1xkkMm/Iy2D.J6', 1, 'admin.jpg', 'Y'),
 (11, 2147, 'hakim', 'hakim dani lukman', '085797887711', 'Banyumas', 'laki-laki', '$2y$05$eRcXS6h8tkRSFcnGSb6T4ucaS027lCbDtDRa6UIyEKL7aIqaVVaNu', 2, 'hakim.jpeg', 'Y'),
 (12, 2147483647, 'komed', 'edwin yoga', '089636337580', 'Banyumas cilacap kebumen', 'laki-laki', '$2y$05$.USCxBQ53ZsDd5N2DXd1ZOrXNMF9XQ4wMeDKTqho4QJB3KN5LqEUi', 3, 'komed.png', 'Y'),
-(13, 94659232, 'yuyu', 'ioio', '089636337580', 'JL. nin aja ya', 'laki-laki', '$2y$05$6iia7Tqs8.hGO.Desnb/B.Z6NlHwt8AuHUBkHzLcm4VUlOKDGAT4u', 3, 'yuyu.jpeg', 'Y');
+(13, 94659232, 'yuyu', 'ioio', '089636337580', 'JL. nin aja ya', 'laki-laki', '$2y$05$6iia7Tqs8.hGO.Desnb/B.Z6NlHwt8AuHUBkHzLcm4VUlOKDGAT4u', 3, 'yuyu.jpeg', 'Y'),
+(16, 0, 'ronaldo', 'hakim', '085797887711', '', 'laki-laki', '$2y$05$/TbAsTzRRq.yEqIC3yRdcennyYsSsy3FV5Ia3/xNkHxJh1ER/5Tl6', 1, 'ronaldo.png', 'Y');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_userlevel`
+-- Table structure for table `tbl_userlevel`
 --
 
 CREATE TABLE `tbl_userlevel` (
@@ -271,7 +351,7 @@ CREATE TABLE `tbl_userlevel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tbl_userlevel`
+-- Dumping data for table `tbl_userlevel`
 --
 
 INSERT INTO `tbl_userlevel` (`id_level`, `nama_level`) VALUES
@@ -284,113 +364,137 @@ INSERT INTO `tbl_userlevel` (`id_level`, `nama_level`) VALUES
 --
 
 --
--- Indeks untuk tabel `aplikasi`
+-- Indexes for table `angsuran`
+--
+ALTER TABLE `angsuran`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `aplikasi`
 --
 ALTER TABLE `aplikasi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pinjaman`
+-- Indexes for table `lama`
+--
+ALTER TABLE `lama`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pinjaman`
 --
 ALTER TABLE `pinjaman`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `simpanan`
+-- Indexes for table `simpanan`
 --
 ALTER TABLE `simpanan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tbl_akses_menu`
+-- Indexes for table `tbl_akses_menu`
 --
 ALTER TABLE `tbl_akses_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tbl_akses_submenu`
+-- Indexes for table `tbl_akses_submenu`
 --
 ALTER TABLE `tbl_akses_submenu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tbl_menu`
+-- Indexes for table `tbl_menu`
 --
 ALTER TABLE `tbl_menu`
   ADD PRIMARY KEY (`id_menu`);
 
 --
--- Indeks untuk tabel `tbl_submenu`
+-- Indexes for table `tbl_submenu`
 --
 ALTER TABLE `tbl_submenu`
   ADD PRIMARY KEY (`id_submenu`);
 
 --
--- Indeks untuk tabel `tbl_user`
+-- Indexes for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Indeks untuk tabel `tbl_userlevel`
+-- Indexes for table `tbl_userlevel`
 --
 ALTER TABLE `tbl_userlevel`
   ADD PRIMARY KEY (`id_level`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `aplikasi`
+-- AUTO_INCREMENT for table `angsuran`
+--
+ALTER TABLE `angsuran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32431;
+
+--
+-- AUTO_INCREMENT for table `aplikasi`
 --
 ALTER TABLE `aplikasi`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `pinjaman`
+-- AUTO_INCREMENT for table `lama`
 --
-ALTER TABLE `pinjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9770;
+ALTER TABLE `lama`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `simpanan`
+-- AUTO_INCREMENT for table `pinjaman`
+--
+ALTER TABLE `pinjaman`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9827;
+
+--
+-- AUTO_INCREMENT for table `simpanan`
 --
 ALTER TABLE `simpanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95862;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_akses_menu`
+-- AUTO_INCREMENT for table `tbl_akses_menu`
 --
 ALTER TABLE `tbl_akses_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_akses_submenu`
+-- AUTO_INCREMENT for table `tbl_akses_submenu`
 --
 ALTER TABLE `tbl_akses_submenu`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_menu`
+-- AUTO_INCREMENT for table `tbl_menu`
 --
 ALTER TABLE `tbl_menu`
   MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_submenu`
+-- AUTO_INCREMENT for table `tbl_submenu`
 --
 ALTER TABLE `tbl_submenu`
   MODIFY `id_submenu` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_user`
+-- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_userlevel`
+-- AUTO_INCREMENT for table `tbl_userlevel`
 --
 ALTER TABLE `tbl_userlevel`
   MODIFY `id_level` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
