@@ -11,10 +11,12 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title"><?= $title ?></h4>
-                            <!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#usermodal">
-                                <i class="fa fa-plus"></i>
-                                Add Anggota
-                            </button> -->
+                            <a href="<?= base_url('admin/print_allsimpanan') ?>" class="btn btn-primary btn-round ml-auto">
+                                <span class="btn-label">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                Cetak
+                            </a>
                         </div>
                     </div>
 
@@ -59,6 +61,12 @@
                                                             <i class="fa fa-exclamation-circle"></i>
                                                         </span>
                                                         Detail Simpanan
+                                                    </a>
+                                                    <a href="<?= base_url('admin/print_simpanan/' . $a->nik . '') ?>" class="btn btn-primary">
+                                                        <span class="btn-label">
+                                                            <i class="fa fa-print"></i>
+                                                        </span>
+                                                        Cetak
                                                     </a>
 
                                                 </div>

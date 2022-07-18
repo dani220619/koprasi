@@ -277,4 +277,15 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+
+    public function print_allsimpanan()
+    {
+        $query = $this->db->query("
+		select s.*, tu.full_name
+        from simpanan s
+        left join tbl_user tu
+        on s.nik=tu.nik
+		");
+        return $query;
+    }
 }

@@ -1077,6 +1077,23 @@ class Admin extends MY_Controller
         $this->load->view('admin/print_angsuran', $data);
     }
 
+    public function print_simpanan($nik)
+    {
+        $data['ket'] = 'Semua Data Simpanan Diterima';
+
+        $data['det_simpanan'] = $this->Mod_user->detail_simpanan($nik)->result();
+        $data['jml'] = $this->Mod_admin->total_simpanan($nik)->row_array();
+        $this->load->view('admin/print_simpanan', $data);
+    }
+    public function print_allsimpanan()
+    {
+        $data['ket'] = 'Semua Data Simpanan Diterima';
+
+        $data['det_simpanan'] = $this->Mod_user->print_allsimpanan()->result();
+
+        $this->load->view('admin/print_allsimpanan', $data);
+    }
+
 
     public function backup()
     {
