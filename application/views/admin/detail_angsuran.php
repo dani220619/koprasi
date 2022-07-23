@@ -27,7 +27,8 @@
                         <label for="" class="hed">
                             <h4>JUMLAH:</h4>
                         </label>
-                        <input type="button" class="btn btn-primary" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="JUMLAH">
+                        <input hidden type="button" class="btn btn-primary" id="jumlah" name="jumlah" value="<?= $angsuran->jumlah ?>" placeholder="JUMLAH">
+                        <input type="button" class="btn btn-primary" id="j" name="j" value="<?= rupiah($angsuran->jumlah) ?>" placeholder="JUMLAH">
                         <br>
                         <label for="" class="hed">
                             <h4>LAMA:</h4>
